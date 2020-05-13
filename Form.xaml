@@ -1,0 +1,66 @@
+﻿<Window x:Class="WpfApp7_8.Form"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp7_8"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        mc:Ignorable="d"
+        Title="Form" Height="600" Width="600"  Background="#FFFFE0">
+    <Grid>
+        <StackPanel>
+        <StackPanel Margin="176,22,175.6,0.4"  DataContext="{Binding SelectedTask}">
+            <Label HorizontalAlignment="Center">Название</Label>
+            <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <Label HorizontalAlignment="Center">Приоритет</Label>
+            <ComboBox x:Name="priority" Margin="0,0,-0.4,0">
+                <ComboBox.Background>
+                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                        <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                        <GradientStop Color="Ivory" Offset="1"/>
+                    </LinearGradientBrush>
+                </ComboBox.Background>
+                <ComboBoxItem x:Name="low" Content="Низкий" FontSize="15" />
+                <ComboBoxItem x:Name="normal" Content="Средний" FontSize="15"/>
+                <ComboBoxItem x:Name="high" Content="Высокий" FontSize="15"/>
+            </ComboBox>
+            <Label HorizontalAlignment="Center">Категория</Label>
+            <ComboBox x:Name="category" Margin="0,0,-0.4,0"  >
+                <ComboBox.Background>
+                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                        <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                        <GradientStop Color="Ivory" Offset="1"/>
+                    </LinearGradientBrush>
+                </ComboBox.Background>
+                <ComboBoxItem x:Name="work" Content="Работа" FontSize="15" />
+                <ComboBoxItem x:Name="studying" Content="Учёба" FontSize="15"/>
+                <ComboBoxItem x:Name="family" Content="Семья" FontSize="15"/>
+            </ComboBox>
+            <Label HorizontalAlignment="Center" RenderTransformOrigin="0.482,1.006">Начало</Label>
+            <DatePicker x:Name="calendarStart" SelectedDate="04/21/2020"  DisplayDateStart="04/21/2020" DisplayDateEnd="01/01/2030" Height="27"  FontSize="15"  Margin="0,10,-0.4,10" Background="Ivory"/>
+            <Label HorizontalAlignment="Center">Завершение</Label>
+            <DatePicker x:Name="calendarEnd" SelectedDate="04/21/2020"  DisplayDateStart="04/21/2020" DisplayDateEnd="01/01/2030" Height="27"  FontSize="15"  Margin="0,10,-0.4,10" Background="Ivory"/>
+            <Label HorizontalAlignment="Center">Задача</Label>
+            <TextBox x:Name="themeOfTask" VerticalScrollBarVisibility="Visible" TextWrapping="Wrap" Height="50" FontSize="15" Margin="10,10,10.4,10" Background="Ivory" Text="{Binding FullDescription}"/>
+        </StackPanel>
+        <StackPanel>
+                <Button Command="{Binding AddPicture}" Background="#EE82EE" Content="Выбрать картинку" Margin="38,10,38,0" Height="33">
+                    <Button.Effect>
+                        <DropShadowEffect/>
+                    </Button.Effect>
+                </Button>
+                <Button Height="33" Background="#EE82EE" Content="Добавить" Margin="38,15,38,0" Command="{Binding AddNew}" CommandParameter="{Binding SelectedTask}">
+                <Button.Effect>
+                    <DropShadowEffect/>
+                </Button.Effect>
+            </Button>
+            <Button Height="30" Background="#EE82EE" Content="Очистить"  Margin="38,15,38,0"  >
+                <Button.Effect>
+                    <DropShadowEffect/>
+                </Button.Effect>
+            </Button>
+        </StackPanel>
+
+        </StackPanel>
+    </Grid>
+</Window>

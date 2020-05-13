@@ -1,0 +1,46 @@
+﻿<Window x:Class="WpfApp7_8.RegistrationForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:local="clr-namespace:WpfApp7_8"
+        mc:Ignorable="d"
+        Title="Registration" Height="300" Width="300" Style="{DynamicResource WindowStyle}">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Grid.Column="0" Content="Login" Grid.ColumnSpan="4" Grid.RowSpan="2" HorizontalContentAlignment="Center"/>
+        <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" MaxLength="50" DataContext="{Binding WorkUser}" Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Grid.Row="2" Grid.Column="0" Content="Password" Grid.ColumnSpan="4" Grid.RowSpan="2" HorizontalContentAlignment="Center"/>
+        <PasswordBox x:Name="Pass" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="PasswordChanged">
+                    <i:InvokeCommandAction Command="{Binding PassChanged}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </PasswordBox>
+        <Label Grid.Row="4" Grid.Column="0" Content="Фамилия" Grid.ColumnSpan="4" Grid.RowSpan="2" HorizontalContentAlignment="Center"/>
+        <TextBox Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="4" MaxLength="50" DataContext="{Binding WorkUser}" Text="{Binding Surname, UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Grid.Row="6" Grid.Column="0" Content="Имя" Grid.ColumnSpan="4" Grid.RowSpan="2" HorizontalContentAlignment="Center"/>
+        <TextBox Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="4" MaxLength="50" DataContext="{Binding WorkUser}" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+        <Button Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Content="Отмена" BorderBrush="{x:Null}" Background="{x:Null}" Command="{Binding Cancel}"/>
+        <Button Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="2" Content="Подтвердить" BorderBrush="{x:Null}" Background="{x:Null}" DataContext="{Binding WorkUser}" Command="{Binding Register}"/>
+    </Grid>
+</Window>

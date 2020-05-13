@@ -1,0 +1,199 @@
+﻿<Window x:Class="WpfApp7_8.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp7_8" 
+        xmlns:col="clr-namespace:System.Collections;assembly=mscorlib" 
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        mc:Ignorable="d"
+        Title="TODOList" Height="500" Width="850" Style="{DynamicResource WindowStyle}" Closing="Window_Closing">
+    <Window.Resources>
+        <Style x:Key="ResetButton" TargetType="Button">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="FontSize" Value="20"/>
+                </Trigger>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsMouseOver" Value="True"/>
+                        <Condition Property="IsPressed" Value="True"/>
+                    </MultiTrigger.Conditions>
+                    <MultiTrigger.Setters>
+                        <Setter Property="Cursor" Value="Hand"/>
+                        <Setter Property="FontSize" Value="14"/>
+                    </MultiTrigger.Setters>
+                </MultiTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="BG" TargetType="Button">
+            <Style.Triggers >
+                <DataTrigger Binding="{Binding ElementName=Reset, Path=IsMouseOver}" Value="True">
+                    <Setter Property="FontSize" Value="20"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid ShowGridLines="False" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions >
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Button x:Name="Add" Grid.RowSpan="2" Grid.Row="1" Grid.Column="18" Grid.ColumnSpan="3" Style="{StaticResource BG}" Command="{Binding Add}" Background="#EE82EE"  Content="{DynamicResource Add}">
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+        </Button>
+        <Button Grid.RowSpan="2" Grid.Row="4" Grid.Column="18" Grid.ColumnSpan="3" Style="{StaticResource BG}" BorderBrush="{x:Null}" Command="{Binding Up}">
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+            <Button.Background>
+                <ImageBrush ImageSource="up.png"/>
+            </Button.Background>
+        </Button>
+        <Button  x:Name="Loa" Grid.RowSpan="2" Grid.Row="7" Grid.Column="18" Grid.ColumnSpan="3" Style="{StaticResource BG}" BorderBrush="{x:Null}" Command="{Binding Down}">
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+            <Button.Background>
+                <ImageBrush ImageSource="down.png"/>
+            </Button.Background>
+        </Button>
+        <Button Grid.RowSpan="2" Grid.Row="10" Grid.Column="18" Grid.ColumnSpan="3" Style="{StaticResource BG}" Content="{DynamicResource Delete}" Command="{Binding Delete}" CommandParameter="{Binding SelectedTask}"  Background="#EE82EE" >
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+        </Button>
+
+        <DataGrid x:Name="table" Grid.Row="1" Grid.Column="1" CanUserAddRows="False" Grid.ColumnSpan="12" Grid.RowSpan="12"  AutoGenerateColumns="False" HeadersVisibility="Column" ItemsSource="{Binding TODO}" SelectedItem="{Binding SelectedTask}"  Background="#FFD8ECF9">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Задача" Binding="{Binding Path= Name, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Дата начала" Binding="{Binding Path= Date, StringFormat={}{0:dd.MM.yyyy}, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Дата завершения" Binding="{Binding Path= Duration, StringFormat={}{0:dd.MM.yyyy}, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Приоритет" Binding="{Binding Path= Priority, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Категория" Binding="{Binding Path= Category, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                <DataGridComboBoxColumn Header="Периодичность" SelectedValueBinding="{Binding Path=Periodicity, UpdateSourceTrigger=PropertyChanged}">
+                    <DataGridComboBoxColumn.ItemsSource>
+                        <col:ArrayList>
+                            <sys:String>Один раз</sys:String>
+                            <sys:String>Один раз в неделю</sys:String>
+                            <sys:String>Один раз в месяц</sys:String>
+                        </col:ArrayList>
+                    </DataGridComboBoxColumn.ItemsSource>
+                </DataGridComboBoxColumn>
+                <DataGridComboBoxColumn Header="Статус" SelectedValueBinding="{Binding Path=State, UpdateSourceTrigger=PropertyChanged}">
+                    <DataGridComboBoxColumn.ItemsSource>
+                        <col:ArrayList>
+                            <sys:String>Завершена</sys:String>
+                            <sys:String>Отложена</sys:String>
+                            <sys:String>В процессе выполнения</sys:String>
+                        </col:ArrayList>
+                    </DataGridComboBoxColumn.ItemsSource>
+                </DataGridComboBoxColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Label Grid.RowSpan="1" Grid.Row="15" Grid.Column="1" Grid.ColumnSpan="3" Content="{DynamicResource Category}" HorizontalContentAlignment="Center" FontSize="11" Background="White"/>
+        <ComboBox  x:Name="Category" Grid.RowSpan="1" Grid.Row="16" Grid.Column="1" Grid.ColumnSpan="3">
+            <ComboBoxItem x:Name="work" Content="Работа" FontSize="15" />
+            <ComboBoxItem x:Name="studying" Content="Учёба" FontSize="15"/>
+            <ComboBoxItem x:Name="family" Content="Семья" FontSize="15"/>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding Search}" CommandParameter="Category"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </ComboBox>
+        <Label Grid.RowSpan="1" Grid.Row="15" Grid.Column="5" Grid.ColumnSpan="3" Content="{DynamicResource Priority}" HorizontalContentAlignment="Center" FontSize="11" Background="White"/>
+
+        <ComboBox x:Name="Priority" Grid.RowSpan="1" Grid.Row="16" Grid.Column="5" Grid.ColumnSpan="3" >
+            <ComboBox.ItemBindingGroup>
+                <BindingGroup/>
+            </ComboBox.ItemBindingGroup>
+            <ComboBox.Background>
+                <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                    <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                    <GradientStop Color="Ivory" Offset="1"/>
+                </LinearGradientBrush>
+            </ComboBox.Background>
+            <ComboBoxItem x:Name="low" Content="Низкий" FontSize="15" />
+            <ComboBoxItem x:Name="normal" Content="Средний" FontSize="15"/>
+            <ComboBoxItem x:Name="high" Content="Высокий" FontSize="15"/>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding Search}" CommandParameter="Priority"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </ComboBox>
+        <DatePicker x:Name="Date" Grid.RowSpan="1" Grid.Row="18" Grid.Column="1" Grid.ColumnSpan="3" BorderBrush="{x:Null}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectedDateChanged">
+                    <i:InvokeCommandAction Command="{Binding Search}" CommandParameter="Date"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </DatePicker>
+        <Button x:Name="Reset"  Grid.RowSpan="2" Grid.Row="15" Grid.Column="9" Grid.ColumnSpan="3" Content="{DynamicResource Reset}" Style="{StaticResource ResetButton}"  Background="#EE82EE" Command="{Binding Reset}" >
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+        </Button>
+        <Button Grid.RowSpan="2" Grid.Row="13" Grid.Column="19" Grid.ColumnSpan="2" x:Name="en_button"  BorderBrush="{x:Null}" Command="{Binding ChangeLanguage}" CommandParameter="en-US">
+            <Button.Background>
+                <ImageBrush ImageSource="english.png"/>
+            </Button.Background>
+        </Button>
+        <Button Grid.RowSpan="2" Grid.Row="15" Grid.Column="19" Grid.ColumnSpan="2"  x:Name="ru_button"  BorderBrush="{x:Null}" Command="{Binding ChangeLanguage}" CommandParameter="ru-RU">
+            <Button.Background>
+                <ImageBrush ImageSource="russia.png"/>
+            </Button.Background>
+        </Button>
+        <Button x:Name="ChangeTheme" Grid.Row="17" Grid.Column="19" Style="{DynamicResource ChangeColor}"  Command="{Binding ChangeTheme}" Height="23" Margin="0.2,23.8,0.4,0" Grid.RowSpan="2" VerticalAlignment="Top" Focusable="False"/>
+        <Label Grid.Row="1"  Grid.Column="14" Grid.ColumnSpan="3" Content="{DynamicResource fullDiscription}" HorizontalContentAlignment="Center" FontSize="11" Background="White"/>
+        <TextBlock Grid.RowSpan="11" Grid.Row="2" Grid.Column="14" Grid.ColumnSpan="3" TextWrapping="Wrap" Background="#FFD8ECF9" Text="{Binding Path=FullDescription}" DataContext="{Binding SelectedTask}"/>
+        <Image Grid.Column="13" Grid.Row="14" Grid.RowSpan="5" Grid.ColumnSpan="5" DataContext="{Binding SelectedTask}" Source="{Binding Path=Image}"/>
+    </Grid>
+</Window>

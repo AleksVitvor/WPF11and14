@@ -349,9 +349,9 @@ namespace Vitvor._7_8WPF
                     string selectTasks = $"select * from TODOList where Userid='{reader.GetInt32(0)}'";
                     reader.Close();
                     SqlCommand selectTask = new SqlCommand(selectTasks, connection);
-                    using(SqlDataReader dataReader=selectTask.ExecuteReader())
+                    using (SqlDataReader dataReader = selectTask.ExecuteReader())
                     {
-                        while(dataReader.Read())
+                        while (dataReader.Read())
                         {
                             Task task = new Task(dataReader.GetInt32(0));
                             task.Name = dataReader.GetString(2);

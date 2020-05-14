@@ -78,13 +78,13 @@ namespace WpfApp7_8
                           }
                           finally
                           {
-                              string select = $"select * from Users where Login='{Login}' and Password='{Password}'";
+                              string select = $"select * from Users where Login=@Login and Password=@Pass";
                               SqlCommand command = new SqlCommand(select, connection);
-                              //SqlParameter LoginParameter = new SqlParameter("@Login", Login);
-                              //SqlParameter PassParameter = new SqlParameter("@Pass", Password);
-                              //command.Parameters.Add(LoginParameter);
-                              //command.Parameters.Add(PassParameter);
-                              using(SqlDataReader reader=command.ExecuteReader())
+                              SqlParameter LoginParameter = new SqlParameter("@Login", Login);
+                              SqlParameter PassParameter = new SqlParameter("@Pass", Password);
+                              command.Parameters.Add(LoginParameter);
+                              command.Parameters.Add(PassParameter);
+                              using (SqlDataReader reader=command.ExecuteReader())
                               {
                                   if(reader.HasRows)
                                   {

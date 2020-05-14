@@ -52,6 +52,7 @@ namespace WpfApp7_8
         private void HideAndShow()
         {
             _enterWindow.Hide();
+            _enterWindow.Password.Clear();
             MainWindow mainWindow = new MainWindow(WorkUser, _enterWindow);
             mainWindow.Show();
         }

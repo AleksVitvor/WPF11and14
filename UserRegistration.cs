@@ -107,10 +107,23 @@ namespace WpfApp7_8
                               }
                               finally
                               {
-                                  string insert = $"insert into Users values('{Login}', '{Password}', '{Surname}','{Name}')";
-                                  SqlCommand command = new SqlCommand(insert, connection);
-                                  command.ExecuteNonQuery();
-                                  Execute.Invoke();
+                                  using (SqlTransaction transaction = connection.BeginTransaction())
+                                  {
+                                      SqlCommand command = connection.CreateCommand();
+                                      command.Transaction = transaction;
+                                      try
+                                      {
+                                          string insert = $"insert into Users values('{Login}', '{Password}', '{Surname}','{Name}')";
+                                          command.CommandText = insert;
+                                          command.ExecuteNonQuery();
+                                          Execute.Invoke();
+                                          transaction.Commit();
+                                      }
+                                      catch (Exception ex)
+                                      {
+                                          transaction.Rollback();
+                                      }
+                                  }
                                   connection.Close();
                               }
                             }

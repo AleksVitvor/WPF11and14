@@ -9,7 +9,7 @@ create table Users
 )
 create table TODOList
 (
-	id int primary key identity(0,1),
+	id int primary key identity(1,1),
 	Userid int foreign key references Users(id),
 	ShortDescription nvarchar(50),
 	FullDescription nvarchar(500),
@@ -18,5 +18,6 @@ create table TODOList
 	Priority nvarchar(50),
 	Category nvarchar(50),
 	State nvarchar(50),
-	Image varchar(MAX)
+	Image varchar(MAX),
+	Periodicity nvarchar(50)
 )
